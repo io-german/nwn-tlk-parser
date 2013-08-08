@@ -7,6 +7,6 @@ import java.io.OutputStream;
 
 public interface Parser {
 
-    DialogsFile serialize(InputStream src);
-    void deserialize(DialogsFile src, OutputStream dest);
+    DialogsFile toObject(InputStream src);
+    void toFile(DialogsFile src, OutputStream dest);
 }
