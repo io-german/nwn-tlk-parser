@@ -1,9 +1,17 @@
 package ua.in.ualt.util;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
 public class DataReader {
+
+    public static byte[] readBytes(RandomAccessFile file, int count) throws IOException {
+        byte[] result = new byte[count];
+        file.read(result);
+        return result;
+    }
 
     public static short readShort(byte[] bytes) {
         ByteBuffer buffer = ByteBuffer.wrap(reverse(bytes));
