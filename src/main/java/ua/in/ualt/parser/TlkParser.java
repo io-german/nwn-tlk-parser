@@ -11,12 +11,10 @@ import static ua.in.ualt.util.DataReader.*;
 public class TlkParser implements Parser {
 
     @Override
-    public DialogsFile toObject(File src) throws IOException {
-        RandomAccessFile file = new RandomAccessFile(src, "r");
-
-        Header header = readHeader(file);
-        List<RowInfo> infos = readRowsInfo(file, header);
-        List<Row> rows = readRows(file, infos);
+    public DialogsFile toObject(InputStream src) throws IOException {
+        Header header = readHeader(src);
+        List<RowInfo> infos = readRowsInfo(src, header);
+        List<Row> rows = readRows(src, infos);
 
         return new TlkFile(header, rows);
     }
@@ -26,7 +24,7 @@ public class TlkParser implements Parser {
         throw new UnsupportedOperationException();
     }
 
-    private Header readHeader(RandomAccessFile file) throws IOException {
+    private Header readHeader(InputStream file) throws IOException {
         final String fileType = readString(readBytes(file, 8));
         final int languageId = readInt(readBytes(file,4));
         final int stringCount = readInt(readBytes(file, 4));
@@ -35,7 +33,7 @@ public class TlkParser implements Parser {
         return new Header(fileType, languageId, stringCount, stringEntriesOffset);
     }
 
-    private List<RowInfo> readRowsInfo(RandomAccessFile file, Header header) throws IOException {
+    private List<RowInfo> readRowsInfo(InputStream file, Header header) throws IOException {
 
         List<RowInfo> result = new ArrayList<>();
         for (int i = 0; i < header.stringCount; i++) {
@@ -54,7 +52,7 @@ public class TlkParser implements Parser {
         return result;
     }
 
-    private List<Row> readRows(RandomAccessFile file, List<RowInfo> infos) throws IOException {
+    private List<Row> readRows(InputStream file, List<RowInfo> infos) throws IOException {
         List<Row> rows  = new ArrayList<>();
         for (RowInfo info : infos) {
             final String text = readString(readBytes(file, info.stringSize));

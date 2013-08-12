@@ -6,6 +6,6 @@ import java.io.*;
 
 public interface Parser {
 
-    DialogsFile toObject(File src) throws IOException;
+    DialogsFile toObject(InputStream src) throws IOException;
     void toFile(DialogsFile src, OutputStream dest);
 }

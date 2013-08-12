@@ -1,13 +1,13 @@
 package ua.in.ualt.util;
 
 import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
 public class DataReader {
 
-    public static byte[] readBytes(RandomAccessFile file, int count) throws IOException {
+    public static byte[] readBytes(InputStream file, int count) throws IOException {
         byte[] result = new byte[count];
         file.read(result);
         return result;
